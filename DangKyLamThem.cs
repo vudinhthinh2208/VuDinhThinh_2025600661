@@ -36,6 +36,18 @@ namespace DangKyLamThem
             LoadData();
         }
 
+        private bool IsValidDate(string date)
+        {
+            DateTime temp;
+            return DateTime.TryParseExact(
+                date,
+                "dd/MM/yyyy",
+                System.Globalization.CultureInfo.InvariantCulture,
+                System.Globalization.DateTimeStyles.None,
+                out temp
+            );
+        }
+
         private void btn_add_Click(object sender, EventArgs e)
         {
             string ngay = tb_date.Text.Trim();
@@ -46,6 +58,16 @@ namespace DangKyLamThem
                                 "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
+
+            // Kiểm tra đúng định dạng ngày dd/MM/yyyy
+            if (!IsValidDate(ngay))
+            {
+                MessageBox.Show("Ngày không đúng định dạng! (dd/MM/yyyy)",
+                                "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                tb_date.Focus();
+                return;
+            }
+
             // Kiểm tra trùng
             if (dataUtils.CheckAdd(ngay, ma))
             {
@@ -96,6 +118,14 @@ namespace DangKyLamThem
             {
                 MessageBox.Show("Trường NGÀY và MÃ NHÂN VIÊN là bắt buộc!",
                                 "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            if (!IsValidDate(ngay))
+            {
+                MessageBox.Show("Ngày không đúng định dạng! (dd/MM/yyyy)",
+                                "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                tb_date.Focus();
                 return;
             }
 

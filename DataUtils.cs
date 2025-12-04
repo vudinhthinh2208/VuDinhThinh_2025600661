@@ -212,5 +212,17 @@ namespace DangKyLamThem
             return result;
         }
 
+        private bool IsValidDate(string date)
+        {
+            DateTime temp;
+            return DateTime.TryParseExact(
+                date,
+                "dd/MM/yyyy",
+                System.Globalization.CultureInfo.InvariantCulture,
+                System.Globalization.DateTimeStyles.None,
+                out temp
+            );
+        }
+
     }
 }
